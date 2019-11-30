@@ -8,6 +8,12 @@ use Symfony\Component\Process\Process;
 
 class CliHandlerTest extends TestCase
 {
+    public function  setUp(): void {
+        $_ENV['LAMBDA_TASK_ROOT'] = '/tmp';
+
+        parent::setUp();
+    }
+
     public function test_cli_handler_returns_correct_factory() {
         $event = [
             'cli' => 'test'
