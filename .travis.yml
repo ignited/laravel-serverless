@@ -21,7 +21,10 @@ before_install:
   # Install Serverless
   - npm install -g serverless@1.43.0
 
-# Install Laravel
+  # Install package's composer
+  - composer install
+
+  # Install Laravel
   - export TMP_LARAVEL_PATH=/tmp/laravel
   - composer create-project laravel/laravel $TMP_LARAVEL_PATH ${LARAVEL} --prefer-dist
 
@@ -33,6 +36,7 @@ before_install:
   - cp layers/laravelBootstrap.php layers/cli/
 
   # Install laravel-serverless
+  - composer clearcache
   - composer config repositories.repo-name path $TRAVIS_BUILD_DIR
   - composer require ignited/laravel-serverless "dev-master" --prefer-source
 
@@ -46,7 +50,7 @@ script:
   - ( cd $TRAVIS_BUILD_DIR ; vendor/bin/phpunit )
 
   # Now Test the Laravel Install
-  
+
   # Test HTTP Works
   - serverless invoke local --docker --function web -e SESSION_DRIVER=array --path $TRAVIS_BUILD_DIR/tests/events/http.json -l
 
