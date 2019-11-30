@@ -23,8 +23,8 @@ jobs:
 
           # Copy across the layers
           - cp -R $TRAVIS_BUILD_DIR/layers .
-          - cp layers/laravelBootstrap.php layers/fpm/
-          - cp layers/laravelBootstrap.php layers/console/
+          - cp layers/laravelBootstrap.php layers/web/
+          - cp layers/laravelBootstrap.php layers/cli/
 
           # Install laravel-serverless
           - composer config repositories.repo-name path $TRAVIS_BUILD_DIR

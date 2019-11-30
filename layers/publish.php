@@ -6,12 +6,12 @@ use Symfony\Component\Process\Process;
 require_once __DIR__ . '/../vendor/autoload.php';
 
 $layers = [
-    'laravel-serverless-console' => 'Laravel Bootstrap for Bref running in Console',
-    'laravel-serverless-fpm' => 'Laravel Bootstrap for Bref running in FPM',
+    'laravel-serverless-cli' => 'Laravel Bootstrap for Bref running in Console',
+    'laravel-serverless-web' => 'Laravel Bootstrap for Bref running in FPM',
 ];
 
 $regions = [
-    /*"ca-central-1",
+    "ca-central-1",
     "eu-central-1",
     "eu-north-1",
     "eu-west-1",
@@ -25,7 +25,7 @@ $regions = [
     "ap-south-1",
     "ap-northeast-1",
     "ap-northeast-2",
-    "ap-southeast-1",*/
+    "ap-southeast-1",
     "ap-southeast-2"
 ];
 

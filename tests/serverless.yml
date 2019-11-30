@@ -8,9 +8,9 @@ provider:
 
 layers:
   cli:
-    path: layers/console
+    path: layers/cli
   web:
-    path: layers/fpm
+    path: layers/web
 
 functions:
   cli:

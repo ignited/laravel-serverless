@@ -6,14 +6,14 @@ publish: layers
 	php publish.php
 
 # Build the layers
-layers: export/laravel-serverless-console.zip export/laravel-serverless-fpm.zip
+layers: export/laravel-serverless-cli.zip export/laravel-serverless-web.zip
 
-# The fpm runtime
-export/laravel-serverless-fpm.zip: fpm/bootstrap
-	rm -f export/laravel-serverless-fpm.zip
-	cd fpm && zip -j ../export/laravel-serverless-fpm.zip bootstrap bootstrap.php ../laravelBootstrap.php
+# The web runtime
+export/laravel-serverless-web.zip: web/bootstrap
+	rm -f export/laravel-serverless-web.zip
+	cd web && zip -j ../export/laravel-serverless-web.zip bootstrap bootstrap.php ../laravelBootstrap.php
 
-# The console runtime
-export/laravel-serverless-console.zip: console/bootstrap
-	rm -f export/laravel-serverless-console.zip
-	cd console && zip -j ../export/laravel-serverless-console.zip bootstrap bootstrap.php ../laravelBootstrap.php
+# The cli runtime
+export/laravel-serverless-cli.zip: cli/bootstrap
+	rm -f export/laravel-serverless-cli.zip
+	cd cli && zip -j ../export/laravel-serverless-cli.zip bootstrap bootstrap.php ../laravelBootstrap.php
