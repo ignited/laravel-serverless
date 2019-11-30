@@ -17,41 +17,38 @@ env:
   - LARAVEL=5.8.*
   - LARAVEL=6.0.*
 
-jobs:
-  include:
-    -   name: 'PHP Unit (Laravel $LARAVEL / PHP $TRAVIS_PHP_VERSION)'
-        install:
-          - composer install
-        script:
-          - vendor/bin/phpunit
+before_install:
+  # Install Serverless
+  - npm install -g serverless@1.43.0
 
-    -   name: 'Smoke Test (Laravel $LARAVEL / PHP $TRAVIS_PHP_VERSION)'
+# Install Laravel
+  - export TMP_LARAVEL_PATH=/tmp/laravel
+  - composer create-project laravel/laravel $TMP_LARAVEL_PATH ${LARAVEL} --prefer-dist
 
-        before_install:
-          # Install Serverless
-          - npm install -g serverless@1.43.0
+  - cd $TMP_LARAVEL_PATH
 
-          # Install Laravel
-          - composer create-project laravel/laravel /tmp/laravel ${LARAVEL} --prefer-dist
+  # Copy across the layers
+  - cp -R $TRAVIS_BUILD_DIR/layers .
+  - cp layers/laravelBootstrap.php layers/web/
+  - cp layers/laravelBootstrap.php layers/cli/
 
-          - cd /tmp/laravel
+  # Install laravel-serverless
+  - composer config repositories.repo-name path $TRAVIS_BUILD_DIR
+  - composer require ignited/laravel-serverless "dev-master" --prefer-source
 
-          # Copy across the layers
-          - cp -R $TRAVIS_BUILD_DIR/layers .
-          - cp layers/laravelBootstrap.php layers/web/
-          - cp layers/laravelBootstrap.php layers/cli/
+before_script:
+  # Copy Serverless Config
+  - cp $TRAVIS_BUILD_DIR/tests/serverless.yml .
+  - export PHP_VERSION=$(echo "$TRAVIS_PHP_VERSION" | sed -e 's/\.//g')
 
-          # Install laravel-serverless
-          - composer config repositories.repo-name path $TRAVIS_BUILD_DIR
-          - composer require ignited/laravel-serverless "dev-master" --prefer-source
-        script:
-          # Copy Serverless Config
-          - cp $TRAVIS_BUILD_DIR/tests/serverless.yml .
+script:
+  # Test the package's PHPunit
+  - ( cd $TRAVIS_BUILD_DIR ; vendor/bin/phpunit )
 
-          - export PHP_VERSION=$(echo "$TRAVIS_PHP_VERSION" | sed -e 's/\.//g')
+  # Now Test the Laravel Install
+  
+  # Test HTTP Works
+  - serverless invoke local --docker --function web -e SESSION_DRIVER=array --path $TRAVIS_BUILD_DIR/tests/events/http.json -l
 
-          # Test HTTP Works
-          - serverless invoke local --docker --function web -e SESSION_DRIVER=array --path $TRAVIS_BUILD_DIR/tests/events/http.json -l
-
-          # Test CLI Works
-          - serverless invoke local --docker --function cli --path $TRAVIS_BUILD_DIR/tests/events/cli.json -l
+  # Test CLI Works
+  - serverless invoke local --docker --function cli --path $TRAVIS_BUILD_DIR/tests/events/cli.json -l
