@@ -1,0 +1,7 @@
+{
+  "httpMethod": "GET",
+  "path": "/",
+  "requestContext": {
+    "protocol": "HTTP/1.1"
+  }
+}

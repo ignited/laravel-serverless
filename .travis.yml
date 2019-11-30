@@ -1,0 +1,40 @@
+language: node_js
+node_js:
+  - 12
+
+services:
+  - docker
+
+provider:
+  name: aws
+
+jobs:
+  include:
+    -   name: 'Smoke Test (Laravel 6.0)'
+        php: 7.3
+        before_install:
+          # Install Serverless
+          - npm install -g serverless@1.43.0
+
+          # Install Laravel
+          - composer create-project laravel/laravel /tmp/laravel 6.0 --prefer-dist
+
+          - cd /tmp/laravel
+
+          # Copy across the layers
+          - cp -R $TRAVIS_BUILD_DIR/layers .
+          - cp layers/laravelBootstrap.php layers/fpm/
+          - cp layers/laravelBootstrap.php layers/console/
+
+          # Install laravel-serverless
+          - composer config repositories.repo-name path $TRAVIS_BUILD_DIR
+          - composer require ignited/laravel-serverless "dev-master" --prefer-source
+        script:
+          # Copy Serverless Config
+          - cp $TRAVIS_BUILD_DIR/tests/serverless.yml .
+
+          # Test HTTP Works
+          - serverless invoke local --docker --function web --path $TRAVIS_BUILD_DIR/tests/events/http.json -l
+
+          # Test CLI Works
+          - serverless invoke local --docker --function cli --path $TRAVIS_BUILD_DIR/tests/events/cli.json -l
