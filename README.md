@@ -1,3 +1,5 @@
+#### Note: this project is still a work in progress. Many things may still be broken.
+
 <img src="https://github.com/ignited/laravel-serverless/blob/master/header.png?raw=trueg" width="400" />
 
 # Laravel Serverless
@@ -26,7 +28,7 @@ composer require ignited/laravel-serverless
 3. **Publish serverless.yml**
 
 ```bash
-php artisan vendor:publish --provider="Laravel\Scout\ScoutServiceProvider"
+php artisan vendor:publish --provider="Ignited\LaravelServerless\LaravelServerlessServiceProvider"
 ```
 
 4. **Deploy to AWS**
