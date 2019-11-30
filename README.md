@@ -11,25 +11,25 @@ This package makes deploying to Amazon Lambda a breeze. It combines the best of 
 
 ## <a name="quick-start"></a>Quick Start
 
-**Install prerequisites:**
+1. **Install prerequisites:**
 
 ```bash
 npm install -g severless
 ```
 
-1. **Install via composer:**
+2. **Install via composer:**
 
 ```bash
 composer require ignited/laravel-serverless
 ```
 
-2. **Publish serverless.yml**
+3. **Publish serverless.yml**
 
 ```bash
 php artisan vendor:publish --provider="Laravel\Scout\ScoutServiceProvider"
 ```
 
-3. **Deploy to AWS**
+4. **Deploy to AWS**
 
 ```bash
 serverless deploy
