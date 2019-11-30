@@ -9,10 +9,6 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Facade;
 use Illuminate\Contracts\Http\Kernel as HttpKernelContract;
 
-//use Laravel\Vapor\Runtime\Http\Middleware\EnsureOnNakedDomain;
-//use Laravel\Vapor\Runtime\Http\Middleware\RedirectStaticAssets;
-//use Laravel\Vapor\Runtime\Http\Middleware\EnsureVanityUrlIsNotIndexed;
-
 class HttpKernel
 {
     /**
@@ -44,20 +40,23 @@ class HttpKernel
         $this->app->useStoragePath(StorageDirectories::PATH);
 
         if (static::shouldSendMaintenanceModeResponse($request)) {
+            $file = $_ENV['LAMBDA_TASK_ROOT'].'/public/503.html';
+
+            if(!file_exists($file)) {
+                $file = __DIR__."/../../stubs/503.html";
+            }
+
             $response = new Response(
-                file_get_contents($_ENV['LAMBDA_TASK_ROOT'].'/503.html'), 503
+                file_get_contents($file), 503
             );
 
             $this->app->terminate();
         } else {
             $kernel = $this->resolveKernel($request);
 
-            $response = (new Pipeline)->send($request)
-                ->through([
-//                    new EnsureOnNakedDomain,
-//                    new RedirectStaticAssets,
-//                    new EnsureVanityUrlIsNotIndexed,
-                ])->then(function ($request) use ($kernel) {
+            $response = (new Pipeline)
+                ->send($request)
+                ->then(function ($request) use ($kernel) {
                     return $kernel->handle($request);
                 });
 
