@@ -18,12 +18,12 @@ functions:
     description: CLI for Laravel
     memorySize: 512
     layers:
-    - arn:aws:lambda:us-east-1:209497400698:layer:php-73:14
+    - arn:aws:lambda:us-east-1:209497400698:layer:php-${env:PHP_VERSION}:14
     - { Ref: CliLambdaLayer }
   web:
     handler: public/index.php
     description: HTTP route for Laravel
     memorySize: 512
     layers:
-    - arn:aws:lambda:us-east-1:209497400698:layer:php-73-fpm:14
+    - arn:aws:lambda:us-east-1:209497400698:layer:php-${env:PHP_VERSION}-fpm:14
     - { Ref: WebLambdaLayer }

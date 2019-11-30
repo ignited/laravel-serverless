@@ -5,19 +5,27 @@ node_js:
 services:
   - docker
 
-provider:
-  name: aws
-
 jobs:
   include:
-    -   name: 'Smoke Test (Laravel 6.0)'
-        php: 7.3
+    -   name: 'Smoke Test (Laravel $LARAVEL / PHP $TRAVIS_PHP_VERSION)'
+        php:
+          - 7.2
+          - 7.3
+        env:
+          matrix:
+            - LARAVEL=5.5.*
+            - LARAVEL=5.6.*
+            - LARAVEL=5.7.*
+            - LARAVEL=5.8.*
+            - LARAVEL=^6.0
+            - LARAVEL=^7.0
+
         before_install:
           # Install Serverless
           - npm install -g serverless@1.43.0
 
           # Install Laravel
-          - composer create-project laravel/laravel /tmp/laravel 6.0 --prefer-dist
+          - composer create-project laravel/laravel /tmp/laravel ${LARAVEL} --prefer-dist
 
           - cd /tmp/laravel
 
@@ -32,6 +40,8 @@ jobs:
         script:
           # Copy Serverless Config
           - cp $TRAVIS_BUILD_DIR/tests/serverless.yml .
+
+          - export PHP_VERSION=$(echo "$TRAVIS_PHP_VERSION" | sed -e 's/\.//g')
 
           # Test HTTP Works
           - serverless invoke local --docker --function web -e SESSION_DRIVER=array --path $TRAVIS_BUILD_DIR/tests/events/http.json -l

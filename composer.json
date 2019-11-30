@@ -6,10 +6,10 @@
   "homepage": "https://github.com/ignited/laravel-serverless",
   "keywords": ["bref", "serverless", "lambda", "laravel", "vapor"],
   "require": {
-    "illuminate/support": "~6",
-    "illuminate/contracts": "~6",
-    "illuminate/pipeline": "~6",
-    "illuminate/http": "~6",
+    "illuminate/support": "~5.4.0|~5.5.0|~5.6.0|~5.7.0|~5.8.0|^6.0",
+    "illuminate/contracts": "~5.4.0|~5.5.0|~5.6.0|~5.7.0|~5.8.0|^6.0",
+    "illuminate/pipeline": "~5.4.0|~5.5.0|~5.6.0|~5.7.0|~5.8.0|^6.0",
+    "illuminate/http": "~5.4.0|~5.5.0|~5.6.0|~5.7.0|~5.8.0|^6.0",
     "bref/bref": "~0.5",
     "aws/aws-sdk-php": "^3.86"
   },
