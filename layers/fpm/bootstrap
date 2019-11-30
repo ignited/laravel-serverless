@@ -1,0 +1,3 @@
+#!/bin/sh
+
+/opt/bin/php /opt/bootstrap.php

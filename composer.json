@@ -1,0 +1,41 @@
+{
+  "name": "ignited/laravel-serverless",
+  "license": "MIT",
+  "type": "project",
+  "description": "Allows you to run Laravel in Lambda",
+  "homepage": "https://github.com/ignited/laravel-serverless",
+  "keywords": ["bref", "serverless", "lambda", "laravel", "vapor"],
+  "require": {
+    "illuminate/support": "~6",
+    "illuminate/contracts": "~6",
+    "illuminate/pipeline": "~6",
+    "illuminate/http": "~6",
+    "bref/bref": "~0.5",
+    "mockery/mockery": "^1.2",
+    "orchestra/testbench": "^4.0",
+    "phpunit/phpunit": "^8.0"
+  },
+  "require-dev": {
+    "aws/aws-sdk-php": "^3.86"
+  },
+  "autoload": {
+    "psr-4": {
+      "Ignited\\LaravelServerless\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Ignited\\LaravelServerless\\Tests\\": "tests"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Ignited\\LaravelServerless\\LaravelServerlessServiceProvider"
+      ]
+    }
+  },
+  "scripts": {
+    "test": "vendor/bin/phpunit"
+  }
+}
