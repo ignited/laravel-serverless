@@ -25,6 +25,18 @@ if(!empty($_ENV['APP_SECRETS_SSM_PATH'])) {
 
 /*
 |--------------------------------------------------------------------------
+| Storage Directories
+|--------------------------------------------------------------------------
+|
+|
+*/
+
+StorageDirectories::create();
+
+StorageDirectories::configure();
+
+/*
+|--------------------------------------------------------------------------
 | Cache Configuration
 |--------------------------------------------------------------------------
 |
@@ -37,10 +49,6 @@ if(!empty($_ENV['APP_SECRETS_SSM_PATH'])) {
 $appRoot = getenv('LAMBDA_TASK_ROOT');
 
 with(require $appRoot.'/bootstrap/app.php', function ($app) {
-    StorageDirectories::create();
-
-    StorageDirectories::configure();
-
     $app->useStoragePath(StorageDirectories::PATH);
 
     fwrite(STDERR, 'Caching Laravel configuration'.PHP_EOL);
