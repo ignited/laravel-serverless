@@ -39,6 +39,8 @@ $appRoot = getenv('LAMBDA_TASK_ROOT');
 with(require $appRoot.'/bootstrap/app.php', function ($app) {
     StorageDirectories::create();
 
+    StorageDirectories::configure();
+
     $app->useStoragePath(StorageDirectories::PATH);
 
     fwrite(STDERR, 'Caching Laravel configuration'.PHP_EOL);

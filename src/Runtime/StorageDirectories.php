@@ -33,4 +33,20 @@ class StorageDirectories
             }
         }
     }
+
+    public static function configure() {
+        $map = [
+            'APP_SERVICES_CACHE' => self::PATH.'bootstrap/cache/services.php',
+            'APP_PACKAGES_CACHE' => self::PATH.'bootstrap/cache/packages.php',
+            'APP_CONFIG_CACHE'   => self::PATH.'bootstrap/cache/config.php',
+            'APP_ROUTES_CACHE'   => self::PATH.'bootstrap/cache/routes.php',
+            'APP_EVENTS_CACHE'   => self::PATH.'bootstrap/cache/events.php',
+        ];
+
+        foreach($map as $key => $value) {
+            if(empty($_ENV[$key])) {
+                $_ENV[$key] = $value;
+            }
+        }
+    }
 }
