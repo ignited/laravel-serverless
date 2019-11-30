@@ -1,4 +1,5 @@
-language: node_js
+language: php
+
 node_js:
   - 12
 
@@ -19,7 +20,7 @@ env:
 jobs:
   include:
     -   name: 'PHP Unit (Laravel $LARAVEL / PHP $TRAVIS_PHP_VERSION)'
-        before_install:
+        install:
           - composer install
         script:
           - vendor/bin/phpunit
