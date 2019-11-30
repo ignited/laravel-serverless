@@ -28,7 +28,7 @@ composer require ignited/laravel-serverless
 3. **Publish serverless.yml**
 
 ```bash
-php artisan vendor:publish --provider="Laravel\Scout\ScoutServiceProvider"
+php artisan vendor:publish --provider="Ignited\LaravelServerless\LaravelServerlessServiceProvider"
 ```
 
 4. **Deploy to AWS**
