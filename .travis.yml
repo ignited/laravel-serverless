@@ -34,7 +34,7 @@ jobs:
           - cp $TRAVIS_BUILD_DIR/tests/serverless.yml .
 
           # Test HTTP Works
-          - serverless invoke local --docker --function web --path $TRAVIS_BUILD_DIR/tests/events/http.json -l
+          - serverless invoke local --docker --function web -e SESSION_DRIVER=array --path $TRAVIS_BUILD_DIR/tests/events/http.json -l
 
           # Test CLI Works
           - serverless invoke local --docker --function cli --path $TRAVIS_BUILD_DIR/tests/events/cli.json -l
