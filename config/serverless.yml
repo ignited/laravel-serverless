@@ -1,0 +1,27 @@
+service:
+  name: laravel
+
+provider:
+  name: aws
+  runtime: provided
+  region: us-east-1
+
+functions:
+  cli:
+    handler: artisan
+    description: CLI for Laravel
+    memorySize: 512
+    layers:
+      - arn:aws:lambda:us-east-1:209497400698:layer:php-73:14
+      - arn:aws:lambda:us-west-1:772889133630:layer:laravel-serverless-cli:1
+  web:
+    handler: public/index.php
+    description: HTTP route for Laravel
+    timeout: 28 # in seconds (API Gateway has a timeout of 29 seconds)
+    memorySize: 512
+    layers:
+      - arn:aws:lambda:us-east-1:209497400698:layer:php-73-fpm:14
+      - arn:aws:lambda:us-west-1:772889133630:layer:laravel-serverless-web:1
+    events:
+      - http: 'ANY /'
+      - http: 'ANY /{proxy+}'
