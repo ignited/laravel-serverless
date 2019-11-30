@@ -36,7 +36,7 @@ before_install:
   - cp layers/laravelBootstrap.php layers/cli/
 
   # Install laravel-serverless
-  - composer clearcache
+  - rm -rf composer.lock
   - composer config repositories.repo-name path $TRAVIS_BUILD_DIR
   - composer require ignited/laravel-serverless "dev-master" --prefer-source
 
