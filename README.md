@@ -39,6 +39,37 @@ serverless deploy
 
 That's it! The rest is handled by this package. There's quite a lot going under the hood.
 
+## <a name="configuration"></a>Configuration
+
+### Storage
+
+When running on Lambda - all functions/code are placed into `/var/task`, since the filesystem is read only - Laravel will not be able to write to certain folders. 
+
+For that reason this package takes most of the hassle away by creating a `/tmp/storage` folder and reconfiguring Laravel during bootstrap.
+
+Lamda does have a 500MB limit so it is recommended you write straight to an S3 bucket. When dealing with large files upon upload you should use a Signed Storage URL to allow clients to write directly to S3. *More info on this coming soon*.
+
+### Database
+
+Database can be configured as normal add your configuration to the [environment](#environment) and secrets to the [SSM parameter store](#ssm-secrets). 
+
+### Logging
+
+As Laravel cannot easily write to logs it is recommended that you use `stderr`. This is picked up by Lambda and can be viewed within Cloudwatch.
+
+You can configure this as such:
+
+```(yml)
+provider:
+    ...
+    enviroment:
+        LOG_CHANNEL=stderr
+```
+
+### Cache
+
+Given the ephemeral nature of a Lambda container it is recommended you only use a `database` cache or `redis` cache. This can be configured as normal and provide the options as [SSM secrets](#secrets) or serverless.yml.
+
 ## <a name="under-the-hood"></a>Under the hood
 
 [Bref](https://github.com/brefphp/bref) takes care of the following:
@@ -58,7 +89,7 @@ This package takes care of the following:
 * Managing the Laravel bootstrap
 * Invoking Laravel CLI based on Lambda events
 * Managing storage directories (`/tmp/storage` is used in AWS Lambda as the App base path is not writable)
-* Managing [SSM Secrets](#ssm-secrets)
+* Managing Configuration/Secrets via the [SSM Parameter Store](#ssm)
 
 ### <a name="php-versions"></a>PHP Versions
 
@@ -78,9 +109,25 @@ arn:aws:lambda:ap-southeast-2:209497400698:layer:php-73-fpm:14
 
 For a full list of supported PHP extensions and to configure more see [Supported Extensions](https://bref.sh/docs/environment/php.html#extensions).
 
+## <a name="environment"></a>Environment Variables
+
+Environment variables can be added to the serverless.yml file.
+
+For example:
+
+```(yml)
+provider:
+  ...
+  environment:
+    DB_HOST: "production.db.rds.us-east-1.com"
+    DB_DATABASE: "laravel"
+```
+ 
+Note: Secrets should be added to [SSM secrets](#ssm-secrets).
+
 ## <a name="ssm-secrets"></a>SSM Secrets
 
-Laravel Serverless will take care of loading SSM secrets at runtime. To do this you will need to provide `APP_SECRETS_SSM_PATH` in your `serverless.yml` enviroment:
+Laravel Serverless will take care of loading configuration and secrets from SSM at runtime. To do this you will need to provide `APP_SECRETS_SSM_PATH` in your `serverless.yml` enviroment:
 
 ```(yml)
 provider:
