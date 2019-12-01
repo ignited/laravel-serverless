@@ -34,9 +34,8 @@ before_install:
   - cp layers/laravelBootstrap.php layers/cli/
 
   # Install laravel-serverless
-  - composer clearcache
-  - composer config repositories.ignited/laravel-serverless vcs $TRAVIS_BUILD_DIR
-  - composer require ignited/laravel-serverless "dev-master" --prefer-source
+  - composer config repositories.ignited/laravel-serverless path $TRAVIS_BUILD_DIR
+  - composer require ignited/laravel-serverless "@dev" --prefer-source
 
 before_script:
   # Copy Serverless Config
@@ -50,7 +49,13 @@ script:
   # Now Test the Laravel Install
 
   # Test HTTP Works
-  - serverless invoke local --docker --function web -e SESSION_DRIVER=array --path $TRAVIS_BUILD_DIR/tests/events/http.json -l
+  - serverless invoke local --docker --function web --path $TRAVIS_BUILD_DIR/tests/events/http.json -l 2>&1 | tee http.response
+
+  - cat http.response | tail -n 2 | head -n 1 | jq -r '.statusCode' | grep "200"
+  - cat http.response | tail -n 2 | head -n 1 | jq -r '.body' | grep "<title>Laravel</title>"
 
   # Test CLI Works
-  - serverless invoke local --docker --function cli --path $TRAVIS_BUILD_DIR/tests/events/cli.json -l
+  - serverless invoke local --docker --function cli --path $TRAVIS_BUILD_DIR/tests/events/cli.json -l | tee cli.response
+
+  - cat cli.response | tail -n 2 | head -n 1 | jq -r '.exitCode' | grep "0"
+  - cat cli.response | tail -n 2 | head -n 1 | jq -r '.output' | base64 --decode | grep 'Configuration cache cleared!'
