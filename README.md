@@ -167,3 +167,13 @@ For example:
 | Amazon Alexa | Coming Soon |
 | Amazon Simple Email Service | Coming Soon |
 | Amazon SQS (Laravel Queues) | Coming Soon |
+
+
+### <a name="directory-changes"></a>Directory Changes
+
+| Default | New |
+| --- | --- |
+| storage/app | /tmp/storage/app |
+| storage/bootstrap/cache | /tmp/storage/bootstrap/cache |
+| storage/framework/cache | /tmp/storage/framework/cache |
+| storage/framework/views | /tmp/storage/framework/views |
