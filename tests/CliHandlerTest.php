@@ -9,7 +9,7 @@ use Symfony\Component\Process\Process;
 class CliHandlerTest extends TestCase
 {
     public function  setUp(): void {
-        $_ENV['LAMBDA_TASK_ROOT'] = '/tmp';
+        $_ENV['LAMBDA_TASK_ROOT'] = '/var/task';
 
         parent::setUp();
     }
@@ -23,6 +23,6 @@ class CliHandlerTest extends TestCase
             ->handle($event)
             ->toArray();
 
-        $this->assertEquals($response['statusCode'], 127);
+        $this->assertEquals($response['exitCode'], 127);
     }
 }

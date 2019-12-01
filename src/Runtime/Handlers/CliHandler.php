@@ -40,7 +40,7 @@ class CliHandler implements LambdaEventHandler
             'requestId' => $_ENV['AWS_REQUEST_ID'] ?? null,
             'logGroup' => $_ENV['AWS_LAMBDA_LOG_GROUP_NAME'] ?? null,
             'logStream' => $_ENV['AWS_LAMBDA_LOG_STREAM_NAME'] ?? null,
-            'statusCode' => $process->getExitCode(),
+            'exitCode' => $process->getExitCode(),
             'output' => base64_encode(implode('', $output)),
         ], function ($response) use ($event) {
             $this->ping($event['callback'] ?? null, $response);
