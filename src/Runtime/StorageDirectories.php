@@ -41,6 +41,8 @@ class StorageDirectories
             'APP_CONFIG_CACHE'   => self::PATH.'/bootstrap/cache/config.php',
             'APP_ROUTES_CACHE'   => self::PATH.'/bootstrap/cache/routes.php',
             'APP_EVENTS_CACHE'   => self::PATH.'/bootstrap/cache/events.php',
+            'VIEW_COMPILED_PATH' => self::PATH.'/framework/views',
+
         ];
 
         foreach($map as $key => $value) {
