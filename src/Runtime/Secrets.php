@@ -18,6 +18,8 @@ class Secrets
     {
         return tap(static::all($path), function ($variables) {
             foreach ($variables as $key => $value) {
+                fwrite(STDERR, "> Environment Bootstrap: Adding $key".PHP_EOL);
+
                 $_ENV[$key] = $value;
             }
         });

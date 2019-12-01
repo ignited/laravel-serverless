@@ -27,7 +27,7 @@ class StorageDirectories
 
         foreach ($directories as $directory) {
             if (! is_dir($directory)) {
-                fwrite(STDERR, "Creating storage directory: $directory".PHP_EOL);
+                fwrite(STDERR, "> Storage Bootstrap: Creating storage directory: $directory".PHP_EOL);
 
                 mkdir($directory, 0755, true);
             }
@@ -47,6 +47,8 @@ class StorageDirectories
 
         foreach($map as $key => $value) {
             if(empty($_ENV[$key])) {
+                fwrite(STDERR, "> Storage Bootstrap: Setting $key to $value".PHP_EOL);
+
                 $_ENV[$key] = $value;
             }
         }
