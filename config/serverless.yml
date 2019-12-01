@@ -5,6 +5,9 @@ provider:
   name: aws
   runtime: provided
   region: us-east-1
+  enviroment:
+    APP_ENV=production
+    LOG_CHANNEL=stderr
 
 functions:
   cli:
