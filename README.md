@@ -154,11 +154,7 @@ For example:
 
 | Event Type | Supported |
 | --- | --- |
-| Laravel 5.5 (LTS) | Coming Soon |
-| Laravel 5.6 | ❌ |
-| Laravel 5.7 | ❌ |
-| Laravel 5.8 | ❌ |
-| Laravel 5.9 | ❌ |
+| Laravel 5.8 | ✅ |
 | Laravel 6.0 (LTS) | ✅ |
 
 ### <a name="supported-types"></a>Supported Event Types
