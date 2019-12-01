@@ -49,6 +49,10 @@ For that reason this package takes most of the hassle away by creating a `/tmp/s
 
 Lamda does have a 500MB limit so it is recommended you write straight to an S3 bucket. When dealing with large files upon upload you should use a Signed Storage URL to allow clients to write directly to S3. *More info on this coming soon*.
 
+### Sessions
+
+Given the ephemeral nature of a Lambda container it is recommended you only use a `database` cache or `redis` for sessions. This can be configured as normal and provide the options as [SSM secrets](#secrets) or serverless.yml.
+
 ### Database
 
 Database can be configured as normal add your configuration to the [environment](#environment) and secrets to the [SSM parameter store](#ssm-secrets). 
@@ -177,3 +181,13 @@ For example:
 | storage/bootstrap/cache | /tmp/storage/bootstrap/cache |
 | storage/framework/cache | /tmp/storage/framework/cache |
 | storage/framework/views | /tmp/storage/framework/views |
+
+## <a name="credits"></a>Credits
+
+- [Laravel Vapor](https://vapor.laravel.com/) for source code inspiration.
+
+## <a name="licensing"></a>Licensing
+
+Laravel Serverless is licensed under the [MIT License](./LICENSE.md).
+
+All files located in the vendor and external directories are externally maintained libraries used by this software which have their own licenses; we recommend you read them, as their terms may differ from the terms in the MIT License.
