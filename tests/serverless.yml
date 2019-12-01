@@ -19,15 +19,15 @@ functions:
     handler: artisan
     description: CLI for Laravel
     memorySize: 512
-    environment:
-      SESSION_DRIVER: array
     layers:
-    - arn:aws:lambda:us-east-1:209497400698:layer:php-${env:PHP_VERSION}:14
-    - { Ref: CliLambdaLayer }
+      - arn:aws:lambda:us-east-1:209497400698:layer:php-${env:PHP_VERSION}:14
+      - { Ref: CliLambdaLayer }
   web:
     handler: public/index.php
     description: HTTP route for Laravel
     memorySize: 512
+    environment:
+      SESSION_DRIVER: array
     layers:
-    - arn:aws:lambda:us-east-1:209497400698:layer:php-${env:PHP_VERSION}-fpm:14
-    - { Ref: WebLambdaLayer }
+      - arn:aws:lambda:us-east-1:209497400698:layer:php-${env:PHP_VERSION}-fpm:14
+      - { Ref: WebLambdaLayer }
