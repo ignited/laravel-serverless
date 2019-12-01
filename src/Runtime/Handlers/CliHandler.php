@@ -29,7 +29,7 @@ class CliHandler implements LambdaEventHandler
         )->setTimeout(null);
 
         $process->run(function ($type, $line) use (&$output) {
-            if (! Str::containsAll($line, ['{"message":', '"level":'])) {
+            if (! Str::contains($line, '{"message":') && ! Str::contains($line, '"level":')) {
                 $output[] = $line;
             }
 
