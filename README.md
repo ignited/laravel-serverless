@@ -2,7 +2,7 @@
 
 <img src="https://github.com/ignited/laravel-serverless/blob/master/header.png?raw=trueg" width="400" />
 
-# Laravel Serverless
+# [ABANDONED] Laravel Serverless
 
 This package makes deploying to Amazon Lambda a breeze. It combines the best of [Bref](https://github.com/brefphp/bref) and [Serverless](https://github.com/serverless/serverless) to bring you an effortless deploy.
 
