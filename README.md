@@ -1,4 +1,4 @@
-#### Note: this project is still a work in progress. Many things may still be broken.
+#### Note: this project has been abandoned, in the years the functionality of [Bref](https://github.com/brefphp/bref) has mostly caught up and this package is now redundant.
 
 <img src="https://github.com/ignited/laravel-serverless/blob/master/header.png?raw=trueg" width="400" />
 
